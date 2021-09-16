@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[4]:
+# In[33]:
 
 
 from PIL import Image
@@ -20,10 +20,10 @@ for img_name in  test_dir_files:
     test.append(img)
 test=np.array(test)/255
 
-result=np.argmax(model.predict(test),axis=1)
+result=[int(x) for x in list(np.argmax(model.predict(test),axis=1))]
 
 
-# In[5]:
+# In[35]:
 
 
 import random
@@ -39,20 +39,14 @@ def read_json(filename):
 
 def generate_sample_file(filename):
     res = {}
-    for i in range(1,100):
-        test_set = str(i) + '.png'
-        res[test_set] = 3
-    return res
-    #write_json(filename, res)
+    for i in range(len(result)):
+        test_set = test_dir_files[i]
+        res[test_set] = result[i]
+    #return res
+    write_json(filename, res)
 
 if __name__ == '__main__':
-    generate_sample_file('./sample_result1.json')
-
-
-# In[10]:
-
-
-
+    generate_sample_file('./result.json')
 
 
 # In[ ]:
